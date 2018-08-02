@@ -20,9 +20,12 @@ app.get('/process_get', function (req, res) {
    console.log(response);
    res.end(JSON.stringify(response));
 });
-app.listen(process.env.PORTs, function(){
-    console.log('Your node js server is running');
-});
+//app.listen(process.env.PORTs, function(){
+//    console.log('Your node js server is running');
+//});
+var port_number = server.listen(process.env.PORT || 3000);
+app.listen(port_number);
+console.log('Your node js server is running');
 //var server = app.listen(8081, function () {
 //   var host = server.address().address
 //   var port = server.address().port
