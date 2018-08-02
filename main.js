@@ -4,14 +4,41 @@
  * and open the template in the editor.
  */
 var express = require("express");
+pg = require("pg"),
+path = require("path");
 var app = express();
 
 app.use(express.static("public"));
+
+var dbString = process.env.DATABASE_URL;
+
+var sharedPgClient;
+
+pg.connect(dbString, function(err,client){
+    if(err){
+        console.error("PG Connection Error")
+    }
+    console.log("Connected to Postgres");
+    sharedPgClient = client;
+});
+
+/*
+ * ExpressJS View Templates
+ */
+app.set("views", path.join(__dirname, "./app/views"));
+app.set("view engine", "ejs");
+
+
 app.get('/index.htm', function (req, res) {
    res.sendFile( __dirname + "/" + "index.html" );
 });
-app.get('/', function (req, res) {
-   res.sendFile( __dirname + "/" + "index.html" );
+app.get("/",function defaultRoute(req, res){
+    var query = "SELECT * FROM salesforce.account";
+    var result = [];
+    sharedPgClient.query(query, function(err, result){
+        console.log("Jobs Query Result Count: " + result.rows.length);
+        res.render("index.ejs", {connectResults: result.rows});
+    });
 });
 
 app.get('/process_get', function (req, res) {
