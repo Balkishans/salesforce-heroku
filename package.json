@@ -4,5 +4,6 @@
     "keywords": ["util", "functional", "server", "client", "browser"],
     "author": "appcino",
     "contributors": [],
-    "dependencies": {}
+    "dependencies": {"express": "4.16.3",
+    "jade": "*"}
 }

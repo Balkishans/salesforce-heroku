@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var express = require('express');
+var express = require("express");
 var app = express();
 
-app.use(express.static('public'));
+app.use(express.static("public"));
 app.get('/index.htm', function (req, res) {
    res.sendFile( __dirname + "/" + "index.html" );
-})
+});
 
 app.get('/process_get', function (req, res) {
    // Prepare output in JSON format
@@ -19,8 +19,8 @@ app.get('/process_get', function (req, res) {
    };
    console.log(response);
    res.end(JSON.stringify(response));
-})
-app.listen(process.env.PORT || 4000, function(){
+});
+app.listen(process.env.PORTs, function(){
     console.log('Your node js server is running');
 });
 //var server = app.listen(8081, function () {
